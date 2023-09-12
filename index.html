@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="calculator w-50 mx-auto text-center">
+            <h3>Calculator</h3>
+            <p class="show-result">
+
+            </p>
+            <div class="key-wrap">
+                <div class="row justify-content-between px-5 py-2">
+                    <button class="btn btn-key col-3">ON</button>
+                    <button class="btn btn-key col-3 btn-operator">%</button>
+                    <button class="btn btn-key col-3 btn-clear">CE</button>
+                    <button class="btn btn-key col-3 btn-clear btn-ac">AC</button>
+                </div>
+                <div class="row justify-content-between px-5 py-3">
+                    <button class="btn btn-key col-3 btn-number">7</button>
+                    <button class="btn btn-key col-3 btn-number">8</button>
+                    <button class="btn btn-key col-3 btn-number">9</button>
+                    <button class="btn btn-key col-3 btn-operator">/</button>
+                </div>
+                <div class="row justify-content-between px-5 py-3">
+                    <button class="btn btn-key col-3 btn-number">4</button>
+                    <button class="btn btn-key col-3 btn-number">5</button>
+                    <button class="btn btn-key col-3 btn-number">6</button>
+                    <button class="btn btn-key col-3 btn-operator">*</button>
+                </div>
+                <div class="row justify-content-between px-5 py-3">
+                    <button class="btn btn-key col-3 btn-number">1</button>
+                    <button class="btn btn-key col-3 btn-number">2</button>
+                    <button class="btn btn-key col-3 btn-number">3</button>
+                    <button class="btn btn-key col-3 btn-operator">-</button>
+                </div>
+                <div class="row justify-content-between px-5 py-3">
+                    <button class="btn btn-key col-3 btn-number">0</button>
+                    <button class="btn btn-key col-3 btn-operator">.</button>
+                    <button class="btn btn-key col-3 btn-equal">=</button>
+                    <button class="btn btn-key col-3 btn-operator">+</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="public/js/sitescript.js"></script>
+    <script>
+        //Node ket qua
+        const showResuiltNode = document.querySelector('.show-result');
+        //Node key AC, CE
+        const clearNodes = document.querySelectorAll('.btn-clear');
+        //Node key number
+        const numberAndOperatorNodes = document.querySelectorAll('.btn-number, .btn-operator');
+        //Node key equal
+        const equalNode = document.querySelector('.btn-equal')
+
+        let check = false;
+        //Xu li nut AC, CE
+        clearNodes.forEach(e => {
+            e.addEventListener('click', function () {
+                if (this.textContent === 'AC') {
+                    showResuiltNode.textContent = "";
+                }
+                else {
+                    showResuiltNode.textContent = showResuiltNode.textContent.substring(0, showResuiltNode.textContent.length - 1);
+                }
+            })
+        });
+
+        //Xu li cac nut number, operator
+        numberAndOperatorNodes.forEach(e => {
+            e.addEventListener('click', function () {
+                if (check == true) {
+                    showResuiltNode.textContent = '';
+                }
+                showResuiltNode.textContent += e.textContent;
+                check = false;
+            })
+        });
+
+        //Xu li nut equal
+        equalNode.addEventListener('click', function () {
+            let a = showResuiltNode;
+            let b = Number(a.textContent.substring(0, a.textContent.length - 1));
+            let rs = 0;
+            if ((a.textContent.indexOf('%') === a.textContent.length - 1) && b != NaN) {
+                a.textContent = eval(b + '/100');
+            }
+            else {
+                a.textContent = eval(a.textContent);
+            }
+            check = true;
+        });
+
+        
+    </script>
+</body>
+
+</html>
